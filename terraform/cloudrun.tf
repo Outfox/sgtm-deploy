@@ -14,7 +14,7 @@ resource "google_project_iam_member" "sa_logging" {
 
 # sGTM Preview server:
 resource "google_cloud_run_service" "sgtm_preview" {
-  name     = "sgtm-preview"
+  name     = var.service_name_preview
   location = var.region
 
   depends_on = [
@@ -57,7 +57,7 @@ resource "google_cloud_run_service" "sgtm_preview" {
 
 # sGTM server:
 resource "google_cloud_run_service" "sgtm" {
-  name     = "sgtm"
+  name     = var.service_name
   location = var.region
 
   depends_on = [
@@ -74,7 +74,7 @@ resource "google_cloud_run_service" "sgtm" {
         }
         env {
           name  = "PREVIEW_SERVER_URL"
-          value = local.preview_server_url
+          value = google_cloud_run_service.sgtm_preview.status[0].url
         }
       }
       service_account_name = google_service_account.sgtm_service_account.email
