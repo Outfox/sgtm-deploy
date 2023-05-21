@@ -1,0 +1,6 @@
+container_config = "aWQ9R1RNLUtUTEc0TkcmZW52PTEmYXV0aD12aDdOOG9mdHlKaWlDdXlQMjRTOFd3"
+project_id       = "sgtm-deploy-test1"
+region           = "europe-west1"
+service_account  = "server-side-gtm"
+min_instances    = "1"
+max_instances    = "1000"
