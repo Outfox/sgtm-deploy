@@ -2,14 +2,15 @@ resource "google_service_account" "sgtm_service_account" {
   project      = var.project_id
   account_id   = var.service_account
   display_name = "Service account for sGTM"
+  depends_on   = [google_project_service.iam]
 }
 
 resource "google_project_iam_member" "sa_logging" {
-  project = var.project_id
-  role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${google_service_account.sgtm_service_account.email}"
+  project    = var.project_id
+  role       = "roles/logging.logWriter"
+  member     = "serviceAccount:${google_service_account.sgtm_service_account.email}"
+  depends_on = [google_service_account.sgtm_service_account]
 }
-
 
 
 # sGTM Preview server:

@@ -10,7 +10,11 @@ resource "google_logging_project_sink" "default" {
   exclusions {
     name        = "sgtm_exclude"
     description = "Exclude requests to sGTM"
-    filter      = "resource.labels.service_name='${var.service_name}' AND httpRequest.status <= 300"
+    filter      = "resource.labels.service_name=\"${var.service_name}\" AND httpRequest.status < 400"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 
 }

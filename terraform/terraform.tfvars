@@ -1,6 +1,23 @@
-container_config = "aWQ9R1RNLUtUTEc0TkcmZW52PTEmYXV0aD12aDdOOG9mdHlKaWlDdXlQMjRTOFd3"
-project_id       = "sgtm-deploy-test1"
-region           = "europe-west1"
-service_account  = "server-side-gtm"
-min_instances    = "1"
-max_instances    = "1000"
+# GTM server side Container Config ID:
+container_config    = ""
+
+# GCP Project ID:
+project_id          = ""
+
+# GCP region:
+region              = "europe-west1"
+
+# Minimim Cloud Run instances:
+min_instances       = "2"
+
+# Maximum Cloud Run instances:
+max_instances       = "100"
+
+# Set to true to enable uptime checks:
+enable_uptime_check = true
+
+# GTM (client side) container ID to check:
+gtm_container_id    = ""
+
+# List of emails address to notify for outages:
+alert_emails        = []
