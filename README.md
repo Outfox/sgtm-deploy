@@ -4,7 +4,7 @@ The deployment performs the follwing operations:
 * Creates a service account for sGTM
 * Deploys sGTM and preview server in Cloud Run
 * Disables access logging (all http status codes < 400)
-* Enables uptime monitoring with email alerts
+* Enables uptime checks with email alerts
 
 ## Deployment process
 Ensure you have the following info before you begin:
@@ -30,9 +30,12 @@ Ensure you have the following info before you begin:
 1. Save the file and go back to the Terminal
 1. Run `terraform init`
 1. To make Terraform aware of the default logging sink in GCP run the following:
-`terraform import google_logging_project_sink.default projects/*[YOUR_PROJECT_ID]*/sinks/_Default`
-(note you have to replace [YOUR_PROJECT_ID] with your GCP Project ID)
+`terraform import google_logging_project_sink.default projects/[PROJECT_ID]/sinks/_Default`
+Note that you have to replace [PROJECT_ID] with your GCP Project ID. Accept authorization when promted.
 1. Run `terraform plan`
 1. Run `terraform apply` (type 'yes' when asked)
 1. Wait until Terraform has completed the setup. You are done!
 
+
+## Uptime checks
+[Uptime check](https://console.cloud.google.com/monitoring/uptime) uses all 6 regions to check if the sGTM application is able to deliver a selected client side GTM container. The variable "gtm_container_id" contains the ID of the GTM container to monitor. Email notifications are sent to all recipients (listed in the "alert_emails" variable) if an outage is detected. 
