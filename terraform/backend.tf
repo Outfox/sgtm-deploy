@@ -1,6 +1,10 @@
+/* REMOVE THIS LINE
+
 terraform {
   backend "gcs" {
-    bucket = "terraform-sgtm-058c125dd9b4f8bd"
+    bucket = ""
     prefix = "terraform/state"
   }
 }
+
+REMOVE THIS LINE */

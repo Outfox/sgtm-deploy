@@ -50,9 +50,9 @@ Note that you have to replace [PROJECT_ID] with your GCP Project ID. Accept auth
 ## Custom domain
 If you like to connect a custom domain name to the sGTM instance you first have to verify the domain through [Google Search Console](https://search.google.com/search-console/). Once the domain is verified you can add the desired DNS name (like "gtm.my-domain.com") to the "custom_domain" variable in the "terraform.tfvars" file. You can now run `terraform apply` apply the custom domain. Lastly you need to add a CNAME record to your DNS. If you have connected "gtm.my-domain.com" you will add "gtm" as your-hostname:
 
-|Name|Type|Data|
-|---|---|---|---|---|
-|your-hostname|CNAME|ghs.googlehosted.com|
+| Name          | Type  | Data                 |
+|---------------|-------|----------------------|
+| your-hostname | CNAME | ghs.googlehosted.com |
 
 
 ## Store Terraform state in Cloud Storage bucket
