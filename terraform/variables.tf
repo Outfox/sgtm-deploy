@@ -62,3 +62,9 @@ variable "alert_message" {
   description = "Additional message to include in downtime alert"
   default     = ""
 }
+
+variable "custom_domain" {
+  type        = string
+  description = "Domain name to mapp to sGTM"
+  default     = ""
+}
