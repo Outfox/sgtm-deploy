@@ -7,7 +7,6 @@ The deployment performs the follwing operations:
 * Enables uptime checks with email alerts
 
 
-
 ## Deployment process
 To run the deployment you need access to the GCP project where you will deploy sGTM with the "Owner" role.
 
@@ -32,6 +31,7 @@ Follow these steps to deploy sGTM:
         1. enable_uptime_check
         1. gtm_container_id
         1. alert_emails
+        1. custom_domain
 1. Save the file and go back to the Terminal
 1. Run `terraform init`
 1. To make Terraform aware of the default logging sink in GCP run the following:
@@ -44,3 +44,23 @@ Note that you have to replace [PROJECT_ID] with your GCP Project ID. Accept auth
 
 ## Uptime checks
 [Uptime check](https://console.cloud.google.com/monitoring/uptime) uses all 6 regions to check if the sGTM application is able to deliver a selected client side GTM container. The variable "gtm_container_id" contains the ID of the GTM container to monitor. Email notifications are sent to all recipients (listed in the "alert_emails" variable) if an outage is detected. 
+
+
+## Custom domain
+If you like to connect a custom domain name to the sGTM instance you first have to verify the domain through [Google Search Console](https://search.google.com/search-console/). Once the domain is verified you can add the desired DNS name (like "gtm.my-domain.com") to the "custom_domain" variable in the "terraform.tfvars" file. You can now run `terraform apply` apply the custom domain. Lastly you need to add a CNAME record to your DNS. If you have connected "gtm.my-domain.com" you will add "gtm" as your-hostname:
+
+| Name          | Type  | Data                 |
+|---------------|-------|----------------------|
+| your-hostname | CNAME | ghs.googlehosted.com |
+
+
+## Store Terraform state in Cloud Storage bucket
+If multiple users (or CI/CD processes) need to manage the sGTM setup it recommended to store the state of the Terraform configuration in a Cloud Storage bucket. 
+Once you have successfully run the `terraform apply` command a [Cloud Storage bucket](https://console.cloud.google.com/storage/browser) is created to host the state files. The bucket name is prefixed "terraform-sgtm-". 
+
+1. Run `edit backend.tf`
+1. Uncomment the entrire block. 
+1. Add the name of your bucket to the "bucket" variable.
+1. Save the file.
+1. Run `terraform init`
+1. Enter "yes" when asked to copy your local state file to the Storage Bucket.
