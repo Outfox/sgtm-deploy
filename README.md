@@ -59,7 +59,7 @@ If you like to connect a custom domain name to the sGTM instance you first have 
 If multiple users (or CI/CD processes) need to manage the sGTM setup it recommended to store the state of the Terraform configuration in a Cloud Storage bucket. 
 Once you have successfully run the `terraform apply` command a [Cloud Storage bucket](https://console.cloud.google.com/storage/browser) is created to host the state files. The bucket name is prefixed "terraform-sgtm-". 
 
-* Run `edit backend.tf`. 
+* Run `edit backend.tf`
 * Uncomment the entrire block. 
 * Add the name of your bucket to the "bucket" variable.
 * Save the file.
