@@ -34,9 +34,6 @@ Follow these steps to deploy sGTM:
         1. custom_domain
 1. Save the file and go back to the Terminal
 1. Run `terraform init`
-1. To make Terraform aware of the default logging sink in GCP run the following:
-`terraform import google_logging_project_sink.default projects/[PROJECT_ID]/sinks/_Default`
-Note that you have to replace [PROJECT_ID] with your GCP Project ID. Accept authorization when promted.
 1. Run `terraform plan`
 1. Run `terraform apply` (type 'yes' when asked)
 1. Wait until Terraform has completed the setup. You are done!
