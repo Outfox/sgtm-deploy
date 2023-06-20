@@ -24,3 +24,7 @@ alert_emails = []
 
 # Custom domain name to use:
 custom_domain = ""
+
+# Schedule for automatic revision update (every Monday at 9:00).
+# Leave blank to disable:
+cron_schedule = "0 9 * * 1"

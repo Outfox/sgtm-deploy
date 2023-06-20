@@ -8,15 +8,27 @@ variable "region" {
   description = "GCP region where the service will run"
 }
 
-variable "service_account" {
+variable "run_service_account" {
   type        = string
-  description = "Name of service account to run sGTM service"
+  description = "Name of service account to run sGTM service in Cloud Run"
   default     = "server-side-gtm"
+}
+
+variable "build_service_account" {
+  type        = string
+  description = "Name of service account to run Cloud Build"
+  default     = "cloud-builder"
 }
 
 variable "container_config" {
   type        = string
   description = "sGTM container config ID"
+}
+
+variable "image_path" {
+  type        = string
+  description = "Path to sGTM container image"
+  default     = "gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable"
 }
 
 variable "min_instances" {
@@ -67,4 +79,15 @@ variable "custom_domain" {
   type        = string
   description = "Domain name to mapp to sGTM"
   default     = ""
+}
+
+variable "cron_schedule" {
+  type        = string
+  description = "Cron schedule when to run Automatic revision update"
+}
+
+variable "cron_timezone" {
+  type        = string
+  description = "Timezone for cron schedule"
+  default     = "UTC"
 }

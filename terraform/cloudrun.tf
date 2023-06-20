@@ -1,6 +1,6 @@
 resource "google_service_account" "sgtm_service_account" {
   project      = var.project_id
-  account_id   = var.service_account
+  account_id   = var.run_service_account
   display_name = "Service account for sGTM"
   depends_on   = [google_project_service.iam]
 }
@@ -23,6 +23,10 @@ resource "google_cloud_run_service" "sgtm_preview" {
     google_service_account.sgtm_service_account
   ]
 
+  lifecycle {
+    ignore_changes = all
+  }
+
   template {
     spec {
       containers {
@@ -40,6 +44,7 @@ resource "google_cloud_run_service" "sgtm_preview" {
     }
     metadata {
       annotations = {
+        "run.googleapis.com/client-name"    = "gcloud",
         "run.googleapis.com/cpu-throttling" = true,
         "autoscaling.knative.dev/minScale"  = "0",
         "autoscaling.knative.dev/maxScale"  = "1"
@@ -65,6 +70,10 @@ resource "google_cloud_run_service" "sgtm" {
     google_cloud_run_service.sgtm_preview
   ]
 
+  lifecycle {
+    ignore_changes = all
+  }
+
   template {
     spec {
       containers {
@@ -82,6 +91,7 @@ resource "google_cloud_run_service" "sgtm" {
     }
     metadata {
       annotations = {
+        "run.googleapis.com/client-name"    = "gcloud",
         "run.googleapis.com/cpu-throttling" = false,
         "autoscaling.knative.dev/minScale"  = var.min_instances,
         "autoscaling.knative.dev/maxScale"  = var.max_instances
