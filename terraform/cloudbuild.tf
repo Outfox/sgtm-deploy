@@ -14,24 +14,28 @@ resource "google_project_iam_custom_role" "cloud_builder" {
   title       = "Cloud Build Runner"
   description = "Permissions to trigger Cloud Builds"
   permissions = ["cloudbuild.builds.create", "cloudscheduler.jobs.run", "logging.logEntries.create", "logging.logEntries.route"]
+  depends_on  = [google_project_service.iam]
 }
 
 resource "google_project_iam_member" "cloud_builder" {
-  project = var.project_id
-  role    = google_project_iam_custom_role.cloud_builder.name
-  member  = "serviceAccount:${google_service_account.cloud_builder.email}"
+  project    = var.project_id
+  role       = google_project_iam_custom_role.cloud_builder.name
+  member     = "serviceAccount:${google_service_account.cloud_builder.email}"
+  depends_on = [google_project_iam_custom_role.cloud_builder]
 }
 
 resource "google_project_iam_member" "run_admin" {
-  project = var.project_id
-  role    = "roles/run.admin"
-  member  = "serviceAccount:${google_service_account.cloud_builder.email}"
+  project    = var.project_id
+  role       = "roles/run.admin"
+  member     = "serviceAccount:${google_service_account.cloud_builder.email}"
+  depends_on = [google_service_account.cloud_builder]
 }
 
 resource "google_project_iam_member" "service_account" {
-  project = var.project_id
-  role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:${google_service_account.cloud_builder.email}"
+  project    = var.project_id
+  role       = "roles/iam.serviceAccountUser"
+  member     = "serviceAccount:${google_service_account.cloud_builder.email}"
+  depends_on = [google_service_account.cloud_builder]
 }
 
 
@@ -109,6 +113,6 @@ resource "google_cloudbuild_trigger" "sgtm" {
     approval_required = false
   }
 
-  depends_on = [google_cloud_run_service.sgtm_preview]
+  depends_on = [google_cloud_run_service.sgtm_preview, google_project_iam_member.service_account]
 
 }
