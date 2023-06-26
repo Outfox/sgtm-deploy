@@ -17,6 +17,7 @@ Ensure you have the following info at hand before you begin:
 * Your sGTM container config key
 
 Follow these steps to deploy sGTM:
+1. [Create a new GCP project](https://console.cloud.google.com/projectcreate) and ensure Billing is enabled.
 1. Enable the [Resource Manager API](https://console.cloud.google.com/apis/library/cloudresourcemanager.googleapis.com)
 1. Open [Cloud Shell](https://shell.cloud.google.com).
 1. Run `git clone https://github.com/Outfox/sgtm-deploy`
